@@ -1,0 +1,29 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+
+.centered-container {
+    text-align: center;
+}
+
+.centered-text {
+    color: red;
+    font-size: 50px;
+    margin-bottom: 20px;
+}
+
+.text-box {
+    padding: 10px;
+    font-size: 16px;
+}
+
+.submit-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-left: 10px;
+}
