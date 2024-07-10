@@ -5,4 +5,7 @@
 venv/
 migrations/
 *.db
-
+*.csv
+*.log
+*.pyc
+__pycache__/
