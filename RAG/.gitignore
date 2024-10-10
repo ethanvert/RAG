@@ -3,9 +3,11 @@
 .DS_Store
 .idea
 venv/
+.venv/
 migrations/
 *.db
 *.csv
 *.log
 *.pyc
+*.pth
 __pycache__/
