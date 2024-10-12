@@ -11,3 +11,4 @@ migrations/
 *.pyc
 *.pth
 __pycache__/
+.codiumai
