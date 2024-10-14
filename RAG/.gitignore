@@ -12,3 +12,9 @@ migrations/
 *.pth
 __pycache__/
 .codiumai
+.gradio
+.ipynb_checkpoints
+logs
+rag_pipeline
+transcripts
+chroma_db
