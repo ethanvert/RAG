@@ -22,13 +22,33 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField('Register')
 
     def validate_username(self, username):
-        user = db.session.scalar(sa.select(User).where(
+        """Validates the uniqueness of a username.
+        
+        Args:
+            username (wtforms.StringField): The username to be validated.
+        
+        Returns:
+            None
+        
+        Raises:
+            ValidationError: If the username already exists in the database.
+        """        user = db.session.scalar(sa.select(User).where(
             User.username == username.data))
         if user is not None:
             raise ValidationError('Please use a different username.')
 
     def validate_email(self, email):
-        user = db.session.scalar(sa.select(User).where(
+        """Validates if the given email is unique in the system.
+        
+        Args:
+            email (Field): The email field containing the email address to validate.
+        
+        Returns:
+            None
+        
+        Raises:
+            ValidationError: If the email already exists in the database.
+        """        user = db.session.scalar(sa.select(User).where(
             User.email == email.data))
         if user is not None:
             raise ValidationError('Please use a different email address.')
