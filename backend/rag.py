@@ -25,7 +25,14 @@ text_splitter = RecursiveCharacterTextSplitter.from_huggingface_tokenizer(
         )
 
 def _split_document(doc):
-    return text_splitter.split_documents([doc])
+    """Split a document into smaller chunks.
+    
+    Args:
+        doc (Document): The input document to be split.
+    
+    Returns:
+        List[Document]: A list of Document objects representing the smaller chunks of the original document.
+    """    return text_splitter.split_documents([doc])
 
 class RAGPipeline(nn.Module):
     def __init__(self,
@@ -37,7 +44,21 @@ class RAGPipeline(nn.Module):
                  prompt_in_chat_format: List[Dict[str, str]] = None,
                  chunk_size: int = 5,
                  ):
-        super(RAGPipeline, self).__init__()
+        """Initialize the RAGPipeline with specified models and configurations.
+        
+        Args:
+            embedding_model_name (str): Name of the embedding model to use. Defaults to 'thenlper/gte-small'.
+            tokenizer_model_name (str): Name of the tokenizer model to use. Defaults to 'meta-llama/Meta-Llama-3.1-8B-Instruct'.
+            generator_model_name (str): Name of the generator model to use. Defaults to 'meta-llama/Meta-Llama-3.1-8B-Instruct'.
+            model_kwargs (Dict): Additional keyword arguments for the models. Defaults to None.
+            encode_kwargs (Dict): Additional keyword arguments for encoding. Defaults to None.
+            prompt_in_chat_format (List[Dict[str, str]]): Prompt template in chat format. Defaults to None.
+            chunk_size (int): Size of text chunks for splitting. Defaults to 5.
+        
+        Returns:
+            None
+        
+        """        super(RAGPipeline, self).__init__()
         self.EMBEDDING_NAME = embedding_model_name
         self.TOKENIZER_NAME = tokenizer_model_name
         self.GENERATOR_NAME = generator_model_name
@@ -98,7 +119,16 @@ class RAGPipeline(nn.Module):
         return docs_processed_unique
 
     def _preprocess_documents(self, df):
-        print("Preprocessing Documents...")
+        """Preprocesses documents and creates a vector database.
+        
+        Args:
+            self: The instance of the class containing this method.
+            df (pandas.DataFrame): A DataFrame containing document information including 'transcript', 'title', 'president', 'url', and 'speech_length'.
+        
+        Returns:
+            None: This method doesn't return anything, but it sets the VECTOR_DATABASE attribute of the class instance.
+        
+        """        print("Preprocessing Documents...")
         kb = [LangchainDocument(page_content=row[1]['transcript'],
                                 metadata={'title': row[1]['title'],
                                           'president': row[1]['president'],
@@ -173,7 +203,18 @@ class RAGPipeline(nn.Module):
 
 
 def main():
-    model_kwargs = {'device': 'cuda', 'trust_remote_code': True}
+    """Main function to demonstrate the usage of RAGPipeline
+    
+    This function initializes a RAGPipeline with specific model and encoding parameters,
+    loads data, performs a query, saves the model, and then reloads it.
+    
+    Args:
+        None
+    
+    Returns:
+        None
+    
+    """    model_kwargs = {'device': 'cuda', 'trust_remote_code': True}
     encode_kwargs = {'normalize_embeddings': True}
     prompt_in_chat_format = [
         {
