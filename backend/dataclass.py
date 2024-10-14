@@ -11,7 +11,18 @@ from hashlib import md5
 
 @login.user_loader
 def load_user(id):
-    return db.session.get(User, int(id))
+    """Load a user from the database by their ID.
+    
+    Args:
+        id (int): The unique identifier of the user to load.
+    
+    Returns:
+        User: The User object corresponding to the given ID.
+    
+    Raises:
+        ValueError: If the provided ID cannot be converted to an integer.
+        SQLAlchemyError: If there's an issue with the database connection or query.
+    """    return db.session.get(User, int(id))
 
 
 class User(UserMixin, db.Model):
@@ -26,16 +37,44 @@ class User(UserMixin, db.Model):
         default=lambda: datetime.now(timezone.utc))
 
     def set_password(self, password) -> None:
-        self.password_hash = generate_password_hash(password)
+        """Sets the password for the user by generating and storing a password hash.
+        
+        Args:
+            password (str): The plain text password to be hashed and stored.
+        
+        Returns:
+            None: This method doesn't return anything.
+        """        self.password_hash = generate_password_hash(password)
 
     def check_password(self, password) -> bool:
-        return check_password_hash(self.password_hash, password)
+        """Checks if the provided password matches the stored password hash.
+        
+        Args:
+            password (str): The password to be verified.
+        
+        Returns:
+            bool: True if the password matches the stored hash, False otherwise.
+        """        return check_password_hash(self.password_hash, password)
 
     def __repr__(self) -> str:
-        return '<User {}>'.format(self.username)
+        """Returns a string representation of the User object.
+        
+        Args:
+            self: The User instance.
+        
+        Returns:
+            str: A string representation of the User object in the format '<User {username}>'.
+        """        return '<User {}>'.format(self.username)
 
     def avatar(self, size):
-        digest = md5(self.email.lower().encode('utf-8')).hexdigest()
+        """Generate a Gravatar URL for the user's email address.
+        
+        Args:
+            size (int): The size of the Gravatar image in pixels.
+        
+        Returns:
+            str: A URL to the Gravatar image for the user's email address.
+        """        digest = md5(self.email.lower().encode('utf-8')).hexdigest()
         return f'https://www.gravatar.com/avatar/{digest}?d=identicon&s={size}'
 
 
@@ -50,4 +89,11 @@ class Post(db.Model):
     author: so.Mapped[User] = so.relationship(back_populates='posts')
 
     def __repr__(self):
-        return '<Post {}>'.format(self.body)
+        """Returns a string representation of the Post object.
+        
+        Args:
+            self: The instance of the Post class.
+        
+        Returns:
+            str: A string representation of the Post object, containing the body of the post.
+        """        return '<Post {}>'.format(self.body)
