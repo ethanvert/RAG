@@ -96,4 +96,4 @@ I'm always looking to improve! If you're interested in contributing or have sugg
 
 For any questions or feedback, reach out  at <a href="mailto:ethan.vertal@gmail.com">ethan.vertal@gmail.com</a>.
 
-Happy chatting with my Presidential insider bot!
+Demo Coming Soon!
