@@ -83,6 +83,7 @@ However, our system excels in:
 2. Expand the knowledge base to cover more aspects of U.S. politics and history
 3. Explore fine-tuning options for even more accurate and contextually relevant responses
 4. Optimize deployment for better scalability and reduced latency
+5. Expand front end from basic Gradio demo interface
 
 ## Get Involved
 
